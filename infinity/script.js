@@ -9,6 +9,7 @@
         try {
             // const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${'tQC67yDvw12IDAPmbZX4qLLHf8koV4hPJhbxJdH1gno'}&count=${count}`;
             loader.hidden = false;
+            document.body.style.overflowY = 'hidden';
             // const res = await fetch(apiUrl);
             photosArray = await (() => {
                 const arr = [];
@@ -55,6 +56,7 @@
             if(photo === photosArray[photosArray.length - 1]) {
                 img.addEventListener('load', () => {
                     loader.hidden = true;
+                    document.body.style.overflowY = 'scroll'
                     count = 10;
                 })
             }
@@ -70,9 +72,6 @@
             }
         }
     });
-
-
-
     getPhtos()
 })()
 
