@@ -16,6 +16,7 @@ html {
 body {
     margin : 0;
     min-height: 100vh;
+    user-select: none;
 }
 
 .about .fas{
@@ -40,7 +41,7 @@ body {
     height: 80%;
     width: 90%;
     background-color: rgba(255, 255, 255, 0.521);
-    border-radius: 30px 30px 30px 30px;
+    border-radius: 30px;
 }
 
 
@@ -52,7 +53,6 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
 }
 
 .start-button {
@@ -64,17 +64,19 @@ body {
     text-align: center;
     font-style: italic;
 
-    width: 300px;
+    width: auto;
     cursor: pointer;
 
     background: none;
     outline: none;
-    border : none;
+    border : 1px solid red;
 
     text-shadow: 0px 3px 7px rgba(255, 255, 255, 0.4);
     position: relative;
 
+    transition: all 1s;
     transition: opacity 1s;
+
 }
 
 .start-button:active {
@@ -84,7 +86,7 @@ body {
 .start-button::before {
     border-radius: 9px 9px 0px 0px;
     border-bottom: 3px solid black;
-    width: 55%;
+    width: 90%;
     content: "";
     position: absolute;
     bottom: 5px;
@@ -94,7 +96,7 @@ body {
 .start-button:hover::before {
     animation-name: aniboder;
     animation-duration: 0.5s;
-    width: 55%;
+    width: 90%;
     height: 60%;
     border-radius: 9px 9px 0px 0px;
     
@@ -105,7 +107,7 @@ body {
 }
 
 .start-button:active::before {
-    width: 55%;
+    width: 90%;
     height: 60%;
     border-radius: 9px 9px 0px 0px;
     
@@ -123,16 +125,235 @@ body {
     color : rgb(92, 194, 143);
 }
 
-/* 게임 시작 후*/
-
 .my-character {
     position: fixed;
     width: 50px;
     height: 90px;
     background: url(image/mymy.png);
     background-repeat: no-repeat;
+    border : 1px solid;
 }
 
 .hover{
     color: salmon;
+}
+
+.hover:not(div)::before {
+    animation-name: aniboder;
+    animation-duration: 0.5s;
+    width: 90%;
+    height: 60%;
+    border-radius: 9px 9px 0px 0px;
+    
+    content: "";
+    position: absolute;
+    bottom: 5px;
+    background-color: rgba(122, 122, 33, 0.4);
+}
+
+/* 게임 시작 후*/
+
+.main-game {
+    display: flex;
+    width: 90%;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.load-conatiner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width : 100%;
+    height : 100%;
+}
+
+
+
+.top-load {
+    width: 33%;
+    height: 40%;
+    background-color: rgba(209, 193, 193, 0.774);
+    border-radius: 15px 15px 0 0;
+
+    display: flex;
+    justify-content: center;
+}
+
+.top-load div {
+    width: 10px;
+    height: 100%;
+    border-left : 15px dashed rgb(158, 27, 27);
+}
+
+.center-load {
+    width: 100%;
+    height: 20%;
+    background-color: rgba(209, 193, 193, 0.774);
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.center-load div {
+    width: 100%;
+    height: 10px;
+    border-top : 15px dashed rgb(158, 27, 27);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottom-load {
+    width: 33%;
+    height: 40%;
+    background-color: rgba(209, 193, 193, 0.774);
+    border-radius: 0 0 15px 15px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.bottom-load div {
+    width: 10px;
+    height: 100%;
+    border-left : 15px dashed rgb(158, 27, 27);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 조작키 */
+.control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width : 300px;
+    height: 300px;
+    right: -1vw;
+    bottom : 1vh;
+    position: fixed;
+
+}
+
+.control-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 50%;
+    height: 50%;
+}
+
+.ArrowUp{
+    width: 60.67px;
+    height: 55px;
+    background-color: violet;
+    margin-bottom: 6px;
+    border-radius: 9px;
+
+
+    font-size : 40px;
+    font-weight: 900;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    
+
+    padding-bottom : 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s, color 0.5s;
+    box-shadow: 3px 3px 7px #141414ab;
+}
+
+.control-wrapper .not-top{
+    display: flex;
+    width: 200px;
+    justify-content: center;
+}
+
+.ArrowLeft, .ArrowRight, .ArrowDown {
+    width: 33%;
+    height: 55px;
+    margin-right: 3px;
+    margin-left: 3px;
+    border-radius: 9px;
+    
+    color: rgb(255, 255, 255);
+    font-weight: 900;
+    padding-bottom : 5px;
+    font-size : 40px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s, color 0.5s;
+    box-shadow: 3px 3px 7px #141414ab;
+
+}
+
+.ArrowLeft {
+    background-color: rgba(92, 133, 194, 0.568);
+}
+.ArrowUp {
+    background-color: rgba(71, 146, 21, 0.568);
+}
+.ArrowRight {
+    background-color: rgba(146, 50, 21, 0.568);
+}
+.ArrowDown {
+    background-color: rgba(121, 21, 146, 0.568);
+}
+
+.pushed {
+    transition: transform 0.5s, color 0.5s;
+    transform: scale(0.9);
+    color : rgb(238, 218, 41);
+}
+
+
+/*  */
+
+
+.hidden {
+    display: none;
 }

@@ -11,17 +11,43 @@
 </head>
 <body>
     <div class="main-container" id="main-container">
-
         <!-- 시작화면 -->
-        <div class="start-container" id="start-container">
-                <div class="about">
-                    <span>임재웅 사용법</span>
-                    <i class="fas fa-paw"></i>
-                </div>
-                <button class="start-button" id="start-button">START</button>
+        <div class="start-container" id="start-container" >
+            <div class="about">
+                <span>임재웅 사용법</span>
+                <i class="fas fa-paw"></i>
+            </div>
+            <button class="start-button" id="start-button">START</button>
+        </div>
+    </div>
+    
+    
+    <!-- 컨트롤러 -->
+    <div class="control" id="control">
+        <div class="control-wrapper">
+            <div class="ArrowUp" id="control-button">▲</div>
+            <div class="not-top">
+                <div class="ArrowLeft" id="control-button">◀</div>
+                <div class="ArrowDown" id="control-button">▼</div>
+                <div class="ArrowRight" id="control-button">▶</div>
             </div>
         </div>
-
+    </div>
+        
+        <!-- 메인게임 바탕화면-->
+            <div class="main-game hidden" id="main-game">
+                <div class="load-conatiner">
+                    <div class="top-load">
+                        <div></div>
+                    </div>
+                    <div class="center-load">
+                        <div></div>
+                    </div>
+                    <div class="bottom-load">
+                        <div></div>
+                    </div>
+                </div>
+            </div>
 
         <!-- Script! -->
     <script src="script.js"></script>

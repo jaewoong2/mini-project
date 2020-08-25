@@ -10,20 +10,36 @@ var makingCharacter = function makingCharacter(className, element) {
 
 var findAnythingOnMyCharacter = function findAnythingOnMyCharacter(element, highElement) {
   var flag = false;
-  var xPosition = "".concat(element.style.left).split('p')[0];
-  var yPosition = "".concat(element.style.top).split('p')[0];
+
+  var _element$getBoundingC = element.getBoundingClientRect(),
+      top = _element$getBoundingC.top,
+      left = _element$getBoundingC.left,
+      width = _element$getBoundingC.width,
+      height = _element$getBoundingC.height;
+
+  var bottom = top + height;
+  var right = left + width;
   var children = highElement.children;
 
   for (var i in children) {
     if (_typeof(children[i]) === 'object') {
-      var _children$i$getBoundi = children[i].getBoundingClientRect(),
-          top = _children$i$getBoundi.top,
-          left = _children$i$getBoundi.left,
-          width = _children$i$getBoundi.width,
-          height = _children$i$getBoundi.height;
+      if (children[i] && children[i] !== element) {
+        console.log(children[i]);
 
-      if (left < xPosition && xPosition < left + width) {
-        if (top < yPosition && yPosition < top + height) {
+        var _children$i$getBoundi = children[i].getBoundingClientRect(),
+            staticTop = _children$i$getBoundi.top,
+            staticLeft = _children$i$getBoundi.left,
+            staticWidth = _children$i$getBoundi.width,
+            staticHeight = _children$i$getBoundi.height;
+
+        var staticBottom = staticTop + staticHeight;
+        var staticRight = staticLeft + staticWidth;
+        var topLeftBoolean = bottom > staticTop && right > staticLeft ? true : false;
+        var bottomLeftBoolean = top < staticBottom && right > staticLeft ? true : false;
+        var topRightBoolean = bottom > staticTop && left < staticRight ? true : false;
+        var bottomRightBoolean = top < staticBottom && left < staticRight ? true : false;
+
+        if ((topLeftBoolean && bottomLeftBoolean || bottomRightBoolean && topRightBoolean) && (topLeftBoolean && topRightBoolean || bottomLeftBoolean && bottomRightBoolean)) {
           children[i].classList.add('hover');
           flag = true;
         } else {
@@ -37,60 +53,129 @@ var findAnythingOnMyCharacter = function findAnythingOnMyCharacter(element, high
   return flag;
 };
 
+function mainGameFunction(mainContainer) {
+  var npcOne = makingCharacter('my-character', 'image');
+  mainContainer.appendChild(npcOne);
+  npcOne.style.top = '10vh';
+  var npcTwo = makingCharacter('my-character', 'image');
+  mainContainer.appendChild(npcTwo);
+  npcTwo.style.bottom = '10vh';
+  var npcThree = makingCharacter('my-character', 'image');
+  mainContainer.appendChild(npcThree);
+  npcThree.style.left = '5vh';
+}
+
 (function () {
   var startButton = document.querySelector('#start-button');
   var startContainer = document.querySelector('#start-container');
   var mainContainer = document.querySelector('#main-container');
+  var mainGame = document.querySelector('#main-game');
+  var leftBtn = document.querySelector('.ArrowLeft');
+  var rightBtn = document.querySelector('.ArrowRight');
+  var bottomBtn = document.querySelector('.ArrowDown');
+  var topBtn = document.querySelector('.ArrowUp');
+  var controlBtn = document.querySelectorAll('#control-button');
+  var xPosition = parseInt(mainContainer.clientWidth / 2, 10);
+  var yPosition = parseInt(mainContainer.clientHeight / 2, 10);
 
   var clickStartBtn = function clickStartBtn() {
     startContainer.children[0].style.opacity = 0;
     startContainer.children[1].style.opacity = 0;
     setTimeout(function () {
-      mainContainer.removeChild(startContainer);
+      startContainer.classList.add('hidden');
+      mainGame.classList.remove('hidden');
+      mainGameFunction(mainContainer);
     }, 1000);
+    mainContainer.appendChild(mainGame);
   };
 
   startButton.addEventListener('click', clickStartBtn);
   var myCharacter = makingCharacter('my-character', 'image');
-  mainContainer.appendChild(myCharacter);
-  console.log(mainContainer.clientWidth * 0.9);
-  console.log(mainContainer.clientHeight * 0.8);
-  var xPosition = parseInt(startContainer.clientWidth / 2, 10);
-  var yPosition = parseInt(startContainer.clientHeight / 2, 10);
   myCharacter.style.top = "".concat(yPosition, "px");
   myCharacter.style.left = "".concat(xPosition, "px");
+  mainContainer.appendChild(myCharacter);
   window.addEventListener('keydown', function (e) {
-    console.log(myCharacter.style.left, xPosition);
-    findAnythingOnMyCharacter(myCharacter, startContainer);
-    console.log(e.key);
+    findAnythingOnMyCharacter(myCharacter, mainContainer);
 
     if (xPosition > mainContainer.clientWidth * 0.9) {
-      xPosition -= 10;
+      xPosition -= 12;
     }
 
     if (yPosition > mainContainer.clientHeight * 0.8) {
-      yPosition -= 10;
+      yPosition -= 12;
     }
 
-    switch (e.key) {
+    if (xPosition < mainContainer.clientWidth * 0.05) {
+      xPosition += 12;
+    }
+
+    if (yPosition < mainContainer.clientHeight * 0.1) {
+      yPosition += 12;
+    }
+
+    switchKeyBtn(e.key, 'down');
+  });
+  window.addEventListener('resize', function () {
+    myCharacter.style.top = "".concat(yPosition, "px");
+    myCharacter.style.left = "".concat(xPosition, "px");
+  });
+  window.addEventListener('keyup', function (e) {
+    switchKeyBtn(e.key, 'up');
+  });
+  controlBtn.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var key = e.currentTarget.classList[0];
+      switchKeyBtn(key, 'down');
+      setTimeout(function () {
+        switchKeyBtn(key, 'up');
+      }, 100);
+    });
+  });
+
+  var switchKeyBtn = function switchKeyBtn(key, isUp) {
+    switch (key) {
       case 'ArrowRight':
-        xPosition += 10;
-        myCharacter.style.left = "".concat(xPosition, "px");
+        if (isUp === 'up') {
+          rightBtn.classList.remove('pushed');
+        } else {
+          xPosition += 10;
+          myCharacter.style.left = "".concat(xPosition, "px");
+          rightBtn.classList.add('pushed');
+        }
+
         break;
 
       case 'ArrowLeft':
-        xPosition -= 10;
-        myCharacter.style.left = "".concat(xPosition, "px");
+        if (isUp === 'up') {
+          leftBtn.classList.remove('pushed');
+        } else {
+          xPosition -= 10;
+          myCharacter.style.left = "".concat(xPosition, "px");
+          leftBtn.classList.add('pushed');
+        }
+
         break;
 
       case 'ArrowUp':
-        yPosition -= 10;
-        myCharacter.style.top = "".concat(yPosition, "px");
+        if (isUp === 'up') {
+          topBtn.classList.remove('pushed');
+        } else {
+          yPosition -= 10;
+          myCharacter.style.top = "".concat(yPosition, "px");
+          topBtn.classList.add('pushed');
+        }
+
         break;
 
       case 'ArrowDown':
-        yPosition += 10;
-        myCharacter.style.top = "".concat(yPosition, "px");
+        if (isUp === 'up') {
+          bottomBtn.classList.remove('pushed');
+        } else {
+          yPosition += 10;
+          myCharacter.style.top = "".concat(yPosition, "px");
+          bottomBtn.classList.add('pushed');
+        }
+
         break;
 
       case 'Enter':
@@ -103,5 +188,5 @@ var findAnythingOnMyCharacter = function findAnythingOnMyCharacter(element, high
       default:
         break;
     }
-  });
+  };
 })();
