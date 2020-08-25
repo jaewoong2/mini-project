@@ -11,11 +11,14 @@
 
 html {
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
 }
 
 body {
     margin : 0;
-    min-height: 100vh;
+    width: 100%;
+    height: 100%;
     user-select: none;
 }
 
@@ -26,8 +29,9 @@ body {
 
 .main-container {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
     background-color: black;
@@ -35,14 +39,14 @@ body {
     flex-direction: column;
 }
 
-.main-container::before {
+/* .main-container::before {
     position: fixed;
     content: "";
     height: 80%;
     width: 90%;
     background-color: rgba(255, 255, 255, 0.521);
     border-radius: 30px;
-}
+} */
 
 
 
@@ -53,6 +57,9 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: rgba(163, 96, 96, 0.685);
+    border-radius: 30px;
+    
 }
 
 .start-button {
@@ -63,6 +70,7 @@ body {
     letter-spacing: 3px;
     text-align: center;
     font-style: italic;
+    z-index: 5;
 
     width: auto;
     cursor: pointer;
@@ -76,7 +84,6 @@ body {
 
     transition: all 1s;
     transition: opacity 1s;
-
 }
 
 .start-button:active {
@@ -136,9 +143,11 @@ body {
 
 .hover{
     color: salmon;
+    border-radius: 9px 9px 0px 0px;
+    border: 5px solid red;
 }
 
-.hover:not(div)::before {
+/* .hover:: {
     animation-name: aniboder;
     animation-duration: 0.5s;
     width: 90%;
@@ -149,7 +158,7 @@ body {
     position: absolute;
     bottom: 5px;
     background-color: rgba(122, 122, 33, 0.4);
-}
+} */
 
 /* 게임 시작 후*/
 
@@ -160,6 +169,8 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: rgba(163, 96, 96, 0.685);
+    border-radius: 30px;
 }
 
 .load-conatiner {
@@ -232,9 +243,13 @@ body {
 
 
 
+@media screen and (max-width : 600px) {
+    
+    .about span{
+        font-size: 3.5rem;
+    }
 
-
-
+}
 
 
 
@@ -310,7 +325,7 @@ body {
     justify-content: center;
 }
 
-.ArrowLeft, .ArrowRight, .ArrowDown {
+.ArrowLeft, .ArrowRight, .ArrowDown, .Enter {
     width: 33%;
     height: 55px;
     margin-right: 3px;
@@ -330,7 +345,11 @@ body {
     box-shadow: 3px 3px 7px #141414ab;
 
 }
-
+.Enter {
+    background-color: rgba(172, 194, 92, 0.568);
+    bottom : 3px;
+    position: absolute;
+}
 .ArrowLeft {
     background-color: rgba(92, 133, 194, 0.568);
 }

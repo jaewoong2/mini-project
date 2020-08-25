@@ -23,14 +23,20 @@ var findAnythingOnMyCharacter = function findAnythingOnMyCharacter(element, high
 
   for (var i in children) {
     if (_typeof(children[i]) === 'object') {
-      if (children[i] && children[i] !== element) {
-        console.log(children[i]);
+      if (children[i].classList[0] === 'start-container') {
+        children = children[i].children;
+      }
+    }
+  }
 
-        var _children$i$getBoundi = children[i].getBoundingClientRect(),
-            staticTop = _children$i$getBoundi.top,
-            staticLeft = _children$i$getBoundi.left,
-            staticWidth = _children$i$getBoundi.width,
-            staticHeight = _children$i$getBoundi.height;
+  for (var _i in children) {
+    if (_typeof(children[_i]) === 'object') {
+      if (children[_i] && children[_i] !== element) {
+        var _children$_i$getBound = children[_i].getBoundingClientRect(),
+            staticTop = _children$_i$getBound.top,
+            staticLeft = _children$_i$getBound.left,
+            staticWidth = _children$_i$getBound.width,
+            staticHeight = _children$_i$getBound.height;
 
         var staticBottom = staticTop + staticHeight;
         var staticRight = staticLeft + staticWidth;
@@ -40,10 +46,12 @@ var findAnythingOnMyCharacter = function findAnythingOnMyCharacter(element, high
         var bottomRightBoolean = top < staticBottom && left < staticRight ? true : false;
 
         if ((topLeftBoolean && bottomLeftBoolean || bottomRightBoolean && topRightBoolean) && (topLeftBoolean && topRightBoolean || bottomLeftBoolean && bottomRightBoolean)) {
-          children[i].classList.add('hover');
+          children[_i].classList.add('hover');
+
           flag = true;
         } else {
-          children[i].classList.remove('hover');
+          children[_i].classList.remove('hover');
+
           flag = false;
         }
       }
@@ -63,6 +71,11 @@ function mainGameFunction(mainContainer) {
   var npcThree = makingCharacter('my-character', 'image');
   mainContainer.appendChild(npcThree);
   npcThree.style.left = '5vh';
+  window.addEventListener('resize', function () {
+    npcOne.style.top = '10vh';
+    npcTwo.style.bottom = '10vh';
+    npcThree.style.left = '5vh';
+  });
 }
 
 (function () {
@@ -73,8 +86,10 @@ function mainGameFunction(mainContainer) {
   var leftBtn = document.querySelector('.ArrowLeft');
   var rightBtn = document.querySelector('.ArrowRight');
   var bottomBtn = document.querySelector('.ArrowDown');
+  var enterBtn = document.querySelector('.Enter');
   var topBtn = document.querySelector('.ArrowUp');
   var controlBtn = document.querySelectorAll('#control-button');
+  var flag = false;
   var xPosition = parseInt(mainContainer.clientWidth / 2, 10);
   var yPosition = parseInt(mainContainer.clientHeight / 2, 10);
 
@@ -82,7 +97,7 @@ function mainGameFunction(mainContainer) {
     startContainer.children[0].style.opacity = 0;
     startContainer.children[1].style.opacity = 0;
     setTimeout(function () {
-      startContainer.classList.add('hidden');
+      mainContainer.removeChild(startContainer);
       mainGame.classList.remove('hidden');
       mainGameFunction(mainContainer);
     }, 1000);
@@ -95,7 +110,7 @@ function mainGameFunction(mainContainer) {
   myCharacter.style.left = "".concat(xPosition, "px");
   mainContainer.appendChild(myCharacter);
   window.addEventListener('keydown', function (e) {
-    findAnythingOnMyCharacter(myCharacter, mainContainer);
+    flag = findAnythingOnMyCharacter(myCharacter, mainContainer);
 
     if (xPosition > mainContainer.clientWidth * 0.9) {
       xPosition -= 12;
@@ -126,6 +141,7 @@ function mainGameFunction(mainContainer) {
     btn.addEventListener('click', function (e) {
       var key = e.currentTarget.classList[0];
       switchKeyBtn(key, 'down');
+      flag = findAnythingOnMyCharacter(myCharacter, mainContainer);
       setTimeout(function () {
         switchKeyBtn(key, 'up');
       }, 100);
@@ -179,7 +195,13 @@ function mainGameFunction(mainContainer) {
         break;
 
       case 'Enter':
-        if (findAnythingOnMyCharacter(myCharacter, startContainer)) {
+        if (isUp === 'up') {
+          enterBtn.classList.remove('pushed');
+        } else {
+          enterBtn.classList.add('pushed');
+        }
+
+        if (flag) {
           clickStartBtn();
         }
 

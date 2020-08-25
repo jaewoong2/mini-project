@@ -1,6 +1,8 @@
 const makingCharacter = (className, element) => {
     const myCharacter = document.createElement(element);
+    
     myCharacter.classList.add(className);
+
 
     return myCharacter
 }
@@ -10,17 +12,26 @@ const findAnythingOnMyCharacter = (element, highElement) => {
     const { top, left, width, height } = element.getBoundingClientRect();
     const bottom = top + height;
     const right = left + width;
+    
+    let children = highElement.children;
 
-    const children = highElement.children
     for(let i in children) {
         if(typeof children[i] === 'object') {
+            if(children[i].classList[0] === 'start-container') {
+            children = children[i].children
+        } 
+    }
+}
+    
+
+    for(let i in children) {
+        if(typeof children[i] === 'object') {
+
             if(children[i] && (children[i] !== element)) {
-                console.log(children[i])
                 const { top : staticTop, left : staticLeft, 
                     width : staticWidth, height : staticHeight } = children[i].getBoundingClientRect();
                     const staticBottom = staticTop + staticHeight;
-                const staticRight = staticLeft + staticWidth;
-                
+                const staticRight = staticLeft + staticWidth;                
                 const topLeftBoolean = (bottom > staticTop && right > staticLeft) ? true : false;
                 const bottomLeftBoolean = (top < staticBottom && right > staticLeft) ? true : false;
                 const topRightBoolean = (bottom > staticTop && left < staticRight) ? true : false;
@@ -54,6 +65,12 @@ function mainGameFunction(mainContainer) {
     const npcThree = makingCharacter('my-character', 'image');
     mainContainer.appendChild(npcThree)
     npcThree.style.left = '5vh';
+    
+    window.addEventListener('resize', () => {
+        npcOne.style.top = '10vh';
+        npcTwo.style.bottom = '10vh'
+        npcThree.style.left = '5vh';
+    })
 }
 
 
@@ -62,13 +79,14 @@ const startButton = document.querySelector('#start-button');
 const startContainer = document.querySelector('#start-container');
 const mainContainer = document.querySelector('#main-container');
 const mainGame = document.querySelector('#main-game');
-
 const leftBtn = document.querySelector('.ArrowLeft');
 const rightBtn = document.querySelector('.ArrowRight');
 const bottomBtn = document.querySelector('.ArrowDown');
+const enterBtn = document.querySelector('.Enter');
 const topBtn = document.querySelector('.ArrowUp');
 const controlBtn = document.querySelectorAll('#control-button');
 
+let flag = false;
 let xPosition = parseInt(mainContainer.clientWidth / 2, 10);
 let yPosition = parseInt(mainContainer.clientHeight / 2, 10);
 
@@ -76,7 +94,7 @@ const clickStartBtn = () => {
     startContainer.children[0].style.opacity = 0;
     startContainer.children[1].style.opacity = 0;
     setTimeout(() => {
-        startContainer.classList.add('hidden');
+        mainContainer.removeChild(startContainer)
         mainGame.classList.remove('hidden');
         mainGameFunction(mainContainer);
     }, 1000);
@@ -91,7 +109,7 @@ myCharacter.style.left = `${xPosition}px`;
 mainContainer.appendChild(myCharacter);
 
 window.addEventListener('keydown', (e) => {
-    findAnythingOnMyCharacter(myCharacter, mainContainer)
+    flag = findAnythingOnMyCharacter(myCharacter, mainContainer)
 
     if(xPosition > mainContainer.clientWidth * 0.9) {
         xPosition -= 12;
@@ -112,6 +130,7 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('resize', () => {
     myCharacter.style.top = `${yPosition}px`;
     myCharacter.style.left = `${xPosition}px`;
+
 })
 
 window.addEventListener('keyup', (e) => {
@@ -122,6 +141,7 @@ controlBtn.forEach(btn => {
     btn.addEventListener('click', (e) => {
         const key = e.currentTarget.classList[0]
         switchKeyBtn(key, 'down')
+        flag = findAnythingOnMyCharacter(myCharacter, mainContainer)
         setTimeout(() => {
         switchKeyBtn(key, 'up')
         }, 100);
@@ -167,9 +187,14 @@ const switchKeyBtn = (key, isUp) => {
             }
             break;
         case 'Enter' : 
-            if(findAnythingOnMyCharacter(myCharacter, startContainer)) {
-                clickStartBtn();
-            }
+        if(isUp === 'up') {
+            enterBtn.classList.remove('pushed')
+        } else {
+            enterBtn.classList.add('pushed')
+        }
+        if(flag) {
+            clickStartBtn();
+        }
             break;
         default:  break;
     }
