@@ -1,0 +1,147 @@
+html {
+    box-sizing: border-box;
+}
+
+body {
+    margin : 0;
+    min-height: 100vh;
+    
+    position: fixed;
+    width : 100vw;
+    height: 100vh;
+
+    /* background-color: rgba(109, 90, 233, 0.507); */
+    background-color:rgba(22, 17, 17, 0.705);
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    width : 100%;
+    height: 100vh;
+    max-height: 100%;
+    color: white;
+}
+
+.main-container p {
+    font-size: 32px;
+    font-weight: 900;
+    /* border : 1px solid; */
+
+    transition: all 2s;
+    padding: 0;
+    margin: 0;
+}
+
+.my-character {
+    position: fixed;
+    width: 50px;
+    height: 90px;
+    background: url(image/mymy.png);
+    background-repeat: no-repeat;
+
+    transition: transform 0.1s ease;
+}
+
+
+
+
+
+
+
+
+/* 컨트롤러 */
+.control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width : 300px;
+    height: 300px;
+    left: -1vw;
+    bottom : 1vh;
+
+    position: fixed;
+}
+
+.control-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 50%;
+    height: 50%;
+}
+
+.ArrowUp{
+    width: 60.67px;
+    height: 55px;
+    background-color: violet;
+    margin-bottom: 6px;
+    border-radius: 9px;
+
+
+    font-size : 40px;
+    font-weight: 900;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    
+
+    padding-bottom : 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s, color 0.5s;
+    box-shadow: 3px 3px 7px #141414ab;
+}
+
+.control-wrapper .not-top{
+    display: flex;
+    width: 200px;
+    justify-content: center;
+}
+
+.ArrowLeft, .ArrowRight, .ArrowDown, .Enter {
+    width: 33%;
+    height: 55px;
+    margin-right: 3px;
+    margin-left: 3px;
+    border-radius: 9px;
+    
+    color: rgb(255, 255, 255);
+    font-weight: 900;
+    padding-bottom : 5px;
+    font-size : 40px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s, color 0.5s;
+    box-shadow: 3px 3px 7px #141414ab;
+
+}
+.Enter {
+    background-color: rgba(172, 194, 92, 0.568);
+    bottom : 3px;
+    position: absolute;
+}
+.ArrowLeft {
+    background-color: rgba(92, 133, 194, 0.568);
+}
+.ArrowUp {
+    background-color: rgba(71, 146, 21, 0.568);
+}
+.ArrowRight {
+    background-color: rgba(146, 50, 21, 0.568);
+}
+.ArrowDown {
+    background-color: rgba(121, 21, 146, 0.568);
+}
+
+.pushed {
+    transition: transform 0.5s, color 0.5s;
+    transform: scale(0.9);
+    color : rgb(238, 218, 41);
+}
