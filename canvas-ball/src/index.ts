@@ -24,8 +24,8 @@ export default class App {
     constructor(ref: HTMLElement) {
         this.ref = ref;
         this.canvas = document.createElement('canvas');
-        this.canvas.width = this.width * 0.9966;
-        this.canvas.height = this.heigth * 0.9965;
+        this.canvas.width = this.width * 0.5;
+        this.canvas.height = this.heigth * 0.5;
 
         this.context = this.canvas.getContext('2d');
         this.entityManager = new EntityManager();
@@ -56,29 +56,36 @@ export default class App {
 
 window.addEventListener('load', () => {
     const app = new App(document.body);
-    document.body.style.background = "url(https://images.unsplash.com/photo-1502307444187-44d62a6a80af?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80)"
     
-    const snowCreator = () => {
-        const circle = new Circle(new Vector(app.canvas.width * Math.random(), 0));
-        app.entityManager.addEntity(circle);
-    }
-
-    let time = 0;
-    const interval = setInterval(() => {
-        for(let i = 0; i < 5; i++) {
-            snowCreator();
-        }
-        time++
-        if(time > 50) { 
-            clearInterval(interval)
-        }
-    },1000)
 
     window.addEventListener('resize', () => {
-        app.canvas.width = window.innerWidth;
-        app.canvas.height = window.innerHeight
-        console.log(app.width, app.heigth);
+        app.canvas.width = window.innerWidth * 0.5;
+        app.canvas.height = window.innerHeight * 0.5;
     })
+
+    const ballCreator = () => {
+        const ball = new Circle(new Vector(app.canvas.width * Math.random(), 0));
+        
+        app.entityManager.addEntity(ball); 
+    }
+
+    
+    ballCreator();
+    ballCreator();
+    ballCreator();
+    ballCreator();    ballCreator();
+    ballCreator();
+    ballCreator();
+    ballCreator();    ballCreator();
+    ballCreator();
+    ballCreator();
+    ballCreator();    ballCreator();
+    ballCreator();
+    ballCreator();
+    ballCreator();    ballCreator();
+    ballCreator();
+    ballCreator();
+    ballCreator();
 
     app.play();
 })
