@@ -7,7 +7,7 @@ import Entity from './Entity';
 export function sleep(ms: number = 500) {
     return new Promise(resolve => {
         setTimeout(() => {
-            resolve();
+            resolve(true);
         }, (ms));
     })
 }

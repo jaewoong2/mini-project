@@ -59,30 +59,29 @@ window.addEventListener('load', () => {
     const app = new App(document.body);
     // document.body.style.background = "url(https://images.unsplash.com/photo-1502307444187-44d62a6a80af?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80)"
     
-    // const snowCreator = () => {
-    //     const circle = new Circle(new Vector(app.canvas.width * Math.random(), 0));
-    //     app.entityManager.addEntity(circle);
-    // }
+    const snowCreator = () => {
+        const circle = new Circle(new Vector(app.canvas.width * Math.random(), 0));
+        app.entityManager.addEntity(circle);
+    }
 
-    // let time = 0;
-    // const interval = setInterval(() => {
-    //     for(let i = 0; i < 5; i++) {
-    //         snowCreator();
-    //     }
-    //     time++
-    //     if(time > 50) { 
-    //         clearInterval(interval)
-    //     }
-    // },1000)
+    let time = 0;
+    const interval = setInterval(() => {
+        for(let i = 0; i < 5; i++) {
+            snowCreator();
+        }
+        time++
+        if(time > 50) { 
+            clearInterval(interval)
+        }
+    },1000)
 
     app.entityManager.addEntity(new Bar(new Vector(app.canvas.width * 0.5, app.canvas.height * 0.5)))
 
-
+    
+    app.play();
     window.addEventListener('resize', () => {
         app.canvas.width = window.innerWidth;
         app.canvas.height = window.innerHeight;
     })
-
-    app.play();
 })
 
