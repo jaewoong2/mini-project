@@ -14,7 +14,7 @@
         // }, 5000);
         // 인텐트 주소
             setTimeout(async () => {
-                window.location.href = 'instagram://media';
+                window.location.href = 'intent://instagram.com/#Intent;package=com.instagram.android;scheme=https;end';
                 await sleep(2000)
                 window.location.href = "https://play.google.com/store/apps/details?id=com.yourssu.ground&hl=ko&gl=US"
             }, 0)
