@@ -1,0 +1,87 @@
+@keyframes animation_yellow {
+    0% {
+        transform: translate3d(-50px, 50px, 0px);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate3d(0px, 0px, 0px);
+        opacity: 1;
+    }
+}
+
+@keyframes animation_blue {
+    0% {
+        transform: translate3d(40px, -40px, 0px);
+        opacity: 0;
+    }
+    15% {
+        transform: translate3d(40px, -40px, 0px);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate3d(0px, 0px, 0px);
+        opacity: 1;
+    }
+}
+
+@keyframes animation_white {
+    0% {
+        background-color: transparent;
+    }
+    49% {
+        background-color: transparent;
+    }
+    55% {
+        background-color: white;
+    }
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+}
+
+.main-container {
+    width: 100%;
+    height: 92%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+}
+
+.blue-wrapper {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-left: 60px;
+    margin-bottom: 60px;    
+    display: flex;
+    animation: animation_white 2.7s linear;
+    background-color: white;
+    z-index: 1;
+}
+
+.blue-wrapper::after {
+    content: "";
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(20, 70, 255, 0.8);
+    animation: animation_blue 2.7s linear;
+}
+
+
+.red-circle {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 190, 90, 0.8);
+    border-radius: 50%;
+    margin-right: 50px;
+    margin-top: 65px;
+    animation: animation_yellow 2.7s linear;
+}
