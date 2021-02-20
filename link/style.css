@@ -55,6 +55,12 @@ main {
     flex-direction: column;
     position: relative;
     justify-content: center;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    -webkit-justify-content: center;
+    align-items: center;
+    -webkit-align-items: center;
 }
 
 .blue-wrapper {
