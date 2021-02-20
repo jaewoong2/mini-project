@@ -109,6 +109,6 @@ main {
     border-radius: 50%;
     margin-right: 35px;
     position: absolute;
-    margin-top: 35px;
+    margin-top: 40px;
     animation: animation_yellow 2.7s linear infinite;
 }
