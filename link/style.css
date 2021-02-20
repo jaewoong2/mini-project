@@ -43,13 +43,13 @@ html {
 }
 
 main {
-    width: 100vw;
-    height: 100vh;
+    width: 95vw;
+    height: 97vh;
 }
 
 .main-container {
     width: 100%;
-    height: 92%;
+    height: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -64,11 +64,12 @@ main {
 }
 
 .blue-wrapper {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     position: absolute;
-    margin-left: 60px;
-    margin-bottom: 60px;    
+    margin-left: 50px;
+    display: -webkit-flex;
+    margin-bottom: 50px;    
     display: flex;
     animation: animation_white 2.7s linear infinite;
     background-color: white;
@@ -77,8 +78,8 @@ main {
 
 .blue-wrapper::after {
     content: "";
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background-color: rgba(20, 70, 255, 0.8);
     animation: animation_blue 2.7s linear infinite;
@@ -87,11 +88,11 @@ main {
 
 .red-circle {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     background-color: rgba(255, 190, 90, 0.8);
     border-radius: 50%;
-    margin-right: 50px;
-    margin-top: 65px;
+    margin-right: 35px;
+    margin-top: 35px;
     animation: animation_yellow 2.7s linear infinite;
 }
