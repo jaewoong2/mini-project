@@ -5,20 +5,22 @@
 
     async function fetch_hash(hash, env) {
         // 백엔드 서버 완료시
-        // const url = await fetch(`http://localhost:3000/v1/shortened-url/${hash}?env=${env}`, {
-        //     method: "GET",
-        // })
+        const url = await fetch(`http://test.ground.yourssu.com:8080/swagger-ui/index.html#/deeplink-controller/v1/shortened-url/${hash}?env=${env}`, {
+            method: "GET",
+        })
 
         if (env === "ANDROID") {
-            return "ground://articleEnd?boardId=3&postId=4"
+            // return "ground://articleEnd?boardId=3&postId=4"
+            return url
         }
 
         if (env === "IOS") {
-            return "https://share.ground.yourssu.com/articleEnd?boardId=4&postId=4"
+            return url
+            // return "https://share.ground.yourssu.com/articleEnd?boardId=4&postId=4"
         }
 
-        return "/"
-        // return url
+        // return "/"
+        return url
     }
     
     // 안드로이드
@@ -26,7 +28,8 @@
         const url =  await fetch_hash(hash, 'ANDROID')
         const isGoToGround = window.confirm("그라운드 앱에서 확인하기") 
         if (isGoToGround) {
-            window.location.href = url
+            console.log(url)
+            // window.location.href = url
         }
         // window.location.href = `https://share.yourssu.com/p/${id}`;
         // window.location.href = `ground://boards/${id.boardId}/posts/${id.postId}`
@@ -43,7 +46,8 @@
         const url =  await fetch_hash(hash, 'IOS')
                 const isGoToGround = window.confirm("그라운드 앱에서 확인하기") 
         if (isGoToGround) {
-            window.location.href = url
+            console.log(url)
+            // window.location.href = url
         }
         // window.location.href = `https://share.yourssu.com/p/${id}`;
         setTimeout( () => {
@@ -55,6 +59,7 @@
     } else {
         // 웹
         const url =  await fetch_hash(hash, 'WEB')
+        console.log(url)
         window.alert("모바일 어플에서 확인해주세요.")
         // window.location.href = url
         // window.location.href = `https://share.yourssu.com/${id}`;
