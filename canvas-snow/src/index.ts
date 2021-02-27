@@ -46,6 +46,7 @@ export default class App {
     onEnterFrame = () => {
         Time.update();
         this.entityManager.update();
+        console.log(this.entityManager)
         if(this.context !== null) {
             this.entityManager.render(this.context);
             this.handleRequestFrame = window.requestAnimationFrame(this.onEnterFrame);

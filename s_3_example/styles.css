@@ -87,7 +87,7 @@ main {
     position: absolute; 
     display: flex;
     display: -webkit-flex;
-    animation: animation_white 2.7s linear infinite;
+    animation: animation_white 2.7s linear;
     background-color: white;
     z-index: 1;
 }
@@ -98,7 +98,7 @@ main {
     height: 70px;
     border-radius: 50%;
     background-color: rgba(20, 70, 255, 0.8);
-    animation: animation_blue 2.7s linear infinite;
+    animation: animation_blue 2.7s linear;
 }
 
 
@@ -110,5 +110,5 @@ main {
     margin-right: 35px;
     position: absolute;
     margin-top: 40px;
-    animation: animation_yellow 2.7s linear infinite;
+    animation: animation_yellow 2.7s linear;
 }
