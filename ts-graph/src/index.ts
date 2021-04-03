@@ -1,3 +1,4 @@
+import { DH_UNABLE_TO_CHECK_GENERATOR } from 'constants';
 import Elem from './dom';
 
 type GraphType = { [k in number | string ]?: number[] }
@@ -11,6 +12,7 @@ function sleep(ms: number) {
 
 function createGraphNodeElems(graph: GraphType) {
     const graphSection = document?.body?.querySelector(`#graph-section`) as HTMLElement;
+
     for(let key in graph) {
         if (!document?.getElementById(`${key}`)) {
             if (graphSection) {
@@ -18,8 +20,9 @@ function createGraphNodeElems(graph: GraphType) {
                     parent: graphSection,
                     refName: 'div',
                     css: {
+                        position: `relative`,
                         width: `32px`,
-                        height: `32px`,
+                        height: `auto`,
                         borderRadius: `50%`,
                         display: 'flex',
                         justifyContent: 'center',
@@ -35,22 +38,27 @@ function createGraphNodeElems(graph: GraphType) {
 }
 
 async function dfs(graph: GraphType, start: number) {
-    const stack: number[] = [start];
+    const stack: { number: number, level: number }[] = [{ number: start, level: 1 }];
     const visited: number[] = [start];
     while (stack.length) {
-        const v = stack.pop();
+        const obj = stack.pop();
+        const { number: v, level } = obj ? obj : { number: start, level: 1 };
         const nextNode = v && graph[v];
-        new Elem({ id: v }).active();
+        const elem = new Elem({ id: v });
+        elem.active();
         if (nextNode) {
+            nextNode.sort((a, b) => b - a);
             for(let i = 0; i < nextNode.length; i++) {
                 if(!visited.includes(nextNode[i])) {
-                    stack.push(nextNode[i])
+                    stack.push({ number: nextNode[i], level: level + 1 })
                     visited.push(nextNode[i])
+                    const childElem = new Elem({ id: nextNode[i] });
+                    elem.addChild(childElem.ref, level + 1);
                 }
             }
         }
-        await sleep(3000);
-        new Elem({ id: v }).inActive();
+        // await sleep(1000);
+        elem.inActive();
     }
 }
 
@@ -70,24 +78,20 @@ function getGraph(graph: string): GraphType {
     });
 
     let graph_: GraphType = {};
+
+    for(let i = 0; i < arr.length; i++) {
+        const parent = arr[i][0];
+        const child = arr[i][1]
+        graph_[parent] = [];
+        graph_[child] = [];
+    }
     
     for(let i = 0; i < arr.length; i++) {
         const parent = arr[i][0];
         const child = arr[i][1]
 
-        if(graph_[parent]?.length) {
-            graph_[parent]?.push(child);
-        } else {
-            graph_[parent] = [child];
-        }
-
-        if(graph_[child]?.length) {
-            graph_[child]?.push(parent);
-        } else {
-            graph_[child] = [parent];
-        }
+        graph_[parent]?.push(child);
     }
-
     return graph_;
 }
 
@@ -105,20 +109,11 @@ function init() {
         }
     });
 
-    const graphInput = new Elem({
-        parent: main.ref,
-        refName: 'input',
-        css: {
-            outline: 'none',
-            border: `1px solid black`,
-            borderRadius: `8px`,
-        }
-    });
-
     new Elem({
         parent: main.ref,
         refName: "section",
         css: {
+            width: `40%`,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -126,8 +121,7 @@ function init() {
         },
         id: 'graph-section',
     });
-    graphInput.ref.setAttribute('placeholder', "ex) [[1, 2], [2, 3], [2, 4]]")
-    const graph = getGraph(`[[1, 2], [2, 3], [2, 4], [3, 5], [5, 8]]`);
+    const graph = getGraph(`[[1, 2], [1, 3], [2, 4], [2, 5], [3, 6], [3, 7], [4, 8], [6, 9]]`);
     createGraphNodeElems(graph);
     dfs(graph, 1);
 }
