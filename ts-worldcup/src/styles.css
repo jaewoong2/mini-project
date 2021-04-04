@@ -1,0 +1,32 @@
+@keyframes changePos{
+    from {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+  
+    to {
+        left: 10%;
+        top: 10px;
+      }
+  }
+.clicked {
+    height: 95% !important;
+}
+
+.not-clicked {
+    height: 0 !important;
+}
+
+.blank {
+    transition: none;
+    opacity: 0;
+}
+
+article {
+    transition: opacity 1s, height 1s;
+}
+
+.change-rank {
+    animation: changePos 1s;
+}

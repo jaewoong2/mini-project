@@ -17,6 +17,7 @@ function findElement(key: string) {
 
 export default class Elem<T extends HTMLElement> {
     ref: HTMLElement | T;
+    parent?: HTMLElement
     constructor({ parent, refName, css, id }: ElemProps) {
         const element = findElement(`${id}`);
         if (element !== null) {
@@ -25,6 +26,7 @@ export default class Elem<T extends HTMLElement> {
             this.ref = document.createElement(refName || "div");
             this.ref.setAttribute("id", `${id || ""}`);
             if (parent !== null) {
+                this.parent = parent;
                 parent?.appendChild(this.ref);
             }
             if (css !== null) {
@@ -37,8 +39,8 @@ export default class Elem<T extends HTMLElement> {
         this.ref.innerText = msg;
     }
 
-    setStyles() {
-        setStyle(this.ref);
+    setStyles(css: ElemProps['css']) {
+        setStyle(this.ref, css);
     }
 
     addChild(childRef: HTMLElement) {

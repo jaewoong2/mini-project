@@ -1,3 +1,4 @@
+import './styles.css';
 import Elem from "./dom";
 import { Image_, ImageController } from "./images";
 import getImage from "./utils/getImage";
@@ -11,9 +12,10 @@ function init() {
         parent: document.body, refName: "main", id: "main", css: {
             position: `relative`,
             display: `flex`,
-            justifyContent: `space-between`,
+            justifyContent: `space-around`,
             alignItems: `center`,
             flexDirection: `column`,
+            height: `100vh`,
             minHeight: `100vh`,
             backgroundColor: `rgba(20, 20, 20, 0.94)`
         }
@@ -25,10 +27,12 @@ function init() {
         refName: 'span',
         css: {
             position: `absolute`,
-            top: `10px`,
-            left: `10%`,
             color: `white`,
             fontSize: `4rem`,
+            zIndex: `2`,
+            left: `10%`,
+            top: `10px`,
+            transition: `transform 1s`,
         }
     })
 
@@ -43,7 +47,7 @@ function init() {
             alignItems: `center`,
             width: `100%`,
             paddingTop: `10px`,
-            height: `50%`,
+            height: `45%`,
         }
     });
 
@@ -57,7 +61,7 @@ function init() {
             alignItems: `center`,
             paddingBottom: `10px`,
             width: `100%`,
-            height: `50%`,
+            height: `45%`,
         }
     });
 
