@@ -3,23 +3,14 @@ import Elem from "./dom";
 import { Image_, ImageController } from "./images";
 import getImage from "./utils/getImage";
 
-function init() {
-    Image_.len = 8;
+const IMAGE_LENGTH = 8;
+
+function game() {
+    Image_.len = IMAGE_LENGTH;
     for (let i = 0; i < Image_.len; i++) {
         Image_.images.push({ src: getImage(i), key: i });
     }
-    const main = new Elem({
-        parent: document.body, refName: "main", id: "main", css: {
-            position: `relative`,
-            display: `flex`,
-            justifyContent: `space-around`,
-            alignItems: `center`,
-            flexDirection: `column`,
-            height: `100vh`,
-            minHeight: `100vh`,
-            backgroundColor: `rgba(20, 20, 20, 0.94)`
-        }
-    });
+    const main = new Elem({ id: "main" });
 
     new Elem({
         parent: main.ref,
@@ -71,5 +62,71 @@ function init() {
     ImageController.images_ = [topImage, bottomImage];
     ImageController.update();
 }
+
+function init() {
+    const main = new Elem({
+        parent: document.body, refName: "main", id: "main", css: {
+            position: `relative`,
+            display: `flex`,
+            justifyContent: `space-around`,
+            alignItems: `center`,
+            flexDirection: `column`,
+            height: `100vh`,
+            minHeight: `100vh`,
+            backgroundColor: `rgba(20, 20, 20, 0.94)`
+        }
+    });
+
+    const h2 = new Elem({
+        parent: main.ref,
+        refName: 'h2',
+        id: 'h2',
+        css: {
+            color: 'white',
+            fontSize: '3em'
+        }
+    });
+
+    const form = new Elem({
+        parent: main.ref,
+        refName: "form",
+        id: 'form',
+        css: {
+            position: `relative`,
+            display: `flex`,
+            justifyContent: `center`,
+            alignItems: `center`,
+            flexDirection: `column`,
+        }
+    });
+
+    const startButton = new Elem({
+        parent: form.ref,
+        refName: 'button',
+        id: 'button',
+        css: {
+            outline: `0`,
+            border: `0`,
+            borderRadius: '8px',
+            display: `flex`,
+            justifyContent: `center`,
+            alignItems: `center`,
+            fontSize: `1.2em`,
+            padding: `8px`,
+            width: `120px`
+        }
+    });
+
+    startButton.ref.innerText = "시작"
+
+    h2.ref.innerText = '이상형 월드컵'
+
+    startButton.ref.addEventListener('click', () => {
+        main.removeChild(form.ref);
+        main.removeChild(h2.ref);
+        game();
+    });
+}
+
 
 window.onload = init;

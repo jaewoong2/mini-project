@@ -14,6 +14,7 @@ const imageStyle: { [key in keyof CSSStyleDeclaration]?: string | null } = {
     maxWidth: `100%`,
     maxHeight: `100%`,
     opacity: `1`,
+    cursor: `pointer`
 };
 
 export class Image_ {
@@ -21,7 +22,7 @@ export class Image_ {
     static images: { src: string; key: string | number }[] = [];
     static flag = false;
     static selected: { src: string; key: string | number }[] = [];
-    private isClick: boolean = false;
+    isClick: boolean = false;
     src: string;
     key: number;
     ref: HTMLImageElement | HTMLElement;
@@ -45,12 +46,14 @@ export class Image_ {
         this.ref = this.elem.ref;
         this.src = src || "";
         this.key = key || -1;
-        this.ref.addEventListener("click", async () => {
-            if (!this.isClick) {
-                Image_.selected.push({ src: this.src, key: Image_.selected.length || 0 });
-                ImageController.update(this.key);
-            }
-        });
+        this.ref.addEventListener("click", this.onClickImageEvent);
+    }
+
+    private onClickImageEvent = () => {
+        if (!this.isClick) {
+            Image_.selected.push({ src: this.src, key: Image_.selected.length || 0 });
+            ImageController.update(this.key);
+        }
     }
 
     private setAttributeSrc(key?: number) {
@@ -84,20 +87,22 @@ export class Image_ {
         this.isClick = false;
     }
 
-    async update() {
+    async update(key?: number) {
+        if (this.isClick) return false;
         const rankElem = new Elem({ id: 'rank' });
         rankElem.ref.classList.remove('change-rank');
         rankElem.updateInnerTEXT(`${Image_.len === 2 ? '결승' : Image_.len === 4 ? '준결승' : Image_.len + `강`} `);
 
         if (Image_.len == 1) {
+
             rankElem.ref.classList.add('change-rank');
             rankElem.updateInnerTEXT(`우승`);
-            this.setAttributeSrc();
+            this.setAttributeSrc(key);
             this.isClick = true;
-            return;
-        }
 
-        if (Image_.selected.length * 2 >= Image_.len || Image_.flag) {
+            return false;
+
+        } else if (Image_.selected.length * 2 >= Image_.len || Image_.flag) {
             rankElem.ref.classList.add('change-rank');
             this.key = this.key % 2 ? 1 : 0;
             if (!Image_.flag) {
@@ -123,9 +128,10 @@ export class ImageController {
 
     static update(key?: number) {
         ImageController.images_.forEach(async (image_) => {
-            await image_.click(key);
-            image_.elem.parent?.classList.remove('blank');
-            image_.update();
+            const flag = image_.isClick;
+            !flag && await image_.click(key);
+            !flag && image_.elem.parent?.classList.remove('blank');
+            !flag && image_.update(key);
         });
     }
 }
