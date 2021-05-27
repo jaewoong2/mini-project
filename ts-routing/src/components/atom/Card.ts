@@ -3,6 +3,7 @@ import { getLocalStorage, request } from '../../utils/api';
 import { ElemConstructorType, POST_TYPE } from "src/type/type";
 import Elem from "./Elem";
 import ImgComponent from "./Img";
+import Loading from './Loading';
 
 
 export default class Card {
@@ -50,9 +51,11 @@ export default class Card {
 
     async init() {
         if (!this.isDataLoaded) {
+            new Loading().setLoading(true);
             const data = await request({ END_POINT: location.pathname, key: location.pathname });
             this.setState({ ...data[0] });
             this.isDataLoaded = true;
+            new Loading().setLoading(false);
         };
     }
 }

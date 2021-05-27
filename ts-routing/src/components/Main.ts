@@ -1,6 +1,4 @@
 import { API_TYPE } from './../type/type';
-import Elem from "./atom/Elem";
-
 const initialState: {
     data?: API_TYPE,
 } = {

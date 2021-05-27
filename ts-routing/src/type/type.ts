@@ -12,6 +12,8 @@ export type POST_TYPE = {
     description: string,
 }
 
+export type path = '/' | '/1' | '/2' | '/3';
+
 export type PROFILE_TYPE = {
     name: string,
     nickName: string,
